@@ -1,0 +1,149 @@
+.nav a:hover {
+	text-decoration: none;
+	color: rgb(5, 97, 118);
+	background-color:#fed501; 
+}
+.nav {
+	display: flex;
+	justify-content: space-between;
+	padding: 10px;
+
+}
+.nav a {
+	color: rgb(5, 97, 118);
+	font-size: 2vh;
+	margin: 0vh 3vw;
+	text-align: center;
+	background-color: rgb(123, 222, 164);
+	border-radius: 30px;
+	width: 10vw;
+	padding: 5px;
+}
+.p {
+	color: rgb(5, 97, 118);
+	text-align: center;
+	background-color: #fed501;
+	border-radius: 30px;
+	width: 10vw;
+	padding: 7px;
+	width: 15vw;
+	border: 5px solid #009c9b;
+}
+
+.p:hover {
+	background-color: rgb(123, 222, 164);
+	color: rgb(5, 97, 118);
+	text-decoration: none;
+
+}
+.h5 {margin-bottom: 10vh;}
+.main {
+	display: flex;
+	justify-content: space-between;
+}
+.div1 {
+	padding: 15vh 5vw;
+	text-align: center;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-around;
+}
+.t1 {
+	
+	font-size: 6vw;
+	font-weight: bold;
+	color: #7bdfa3;
+}
+h4 {
+	margin-top: 4vh;
+	margin: 0vh 5vw;
+}
+.btn-secondary {
+	background-color: #009c9b !important;
+	width: 40vw;
+	text-align: right;
+	border-radius: 20px !important;
+}
+.dropdown-item {
+	width: 40vw !important;
+	text-align: center !important;
+	border: none;
+}
+.dropdown {
+	margin-top: 5vh;
+	border-radius: 20px;
+}
+.bigIm {
+	width: 48vw;
+}
+
+.login {
+	margin-top: 80px;
+}
+.h22{
+	margin-top: 35px;
+}
+.rectangle {
+	width: 600px;
+	margin-bottom: 5vh;
+	border-radius: 20px;
+	border: 2px solid #009c9b;
+	padding: 20px;
+	background-color: white;
+}
+.email {
+	width: 80% !important;
+	margin: 3vh 1vw;
+}
+.regp a {
+	color: #009c9b;
+}
+.regp a:hover {
+	color:  #fed501;
+}
+.regp {
+	margin-top: 2vh;
+}
+.select {
+	width: 50% !important;
+	display: inline !important;
+	margin-left: 2vw;
+}
+.back {
+	background-image: url("https://media1.giphy.com/media/3rYN7YQEHODeq7IoKR/source.gif");
+	z-index: -1;
+}
+@media (max-width: 830px) {
+	
+	.dropdown-item {
+		width: 70vw !important;
+	}
+	.btn-secondary {width: 70vw;}
+	.p {
+		width: 30vw !important;
+		margin-top: 5vh;
+	}
+	.main {
+		flex-direction: column;
+	}
+	.bigIm {
+		display: none;
+	}
+	.rectangle {
+		width: 95vw;
+	}
+	.nav {
+		flex-direction: column;
+
+	}
+	.nav a{
+		border-radius: 0px;
+		width: 100vw;
+		margin: 0px;
+	}
+	.back {
+		background-image: none;
+
+	}
+}
