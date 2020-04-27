@@ -75,10 +75,10 @@ if (isset($_POST['reg_user'])) {
     
     echo 'hello ad';
 
-   // header('location: index.php');
+    header('location: index.php');
   }
   else{
-    echo 'sxff';
+    echo 'Some errors!';
   }
 }
 
