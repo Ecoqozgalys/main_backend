@@ -8,6 +8,8 @@ $first_name  = "";
 $second_name = "";
 $errors = array(); 
 
+$_SESSION['user_id'] = 'None';
+
 // connect to the database
 $db = oci_pconnect("ecoeco", "qwerty123", "//localhost/xe");
 
@@ -28,6 +30,9 @@ if (isset($_POST['reg_user'])) {
 
   // first check the database to make sure 
   // a user does not already exist with the same username and/or email
+  
+  // Altynay here is sql_query
+  // Get all distinct users where username or email equals, to check if user has been registered before
   $user_check_query = "SELECT DISTINCT username, email FROM users WHERE username='$username' OR email='$email'";
   //$user_check_query = "SELECT * FROM users";
   //echo $user_check_query;
@@ -56,17 +61,13 @@ if (isset($_POST['reg_user'])) {
   if (count($errors) == 0) {
   	$password = md5($password);//encrypt the password before saving in the database
     echo 'inserting for you a';
+    // Altynay here is sql_query
+    // Insert new user to users table, do not forget about auto incrementing user_id
   	$query = "INSERT INTO users (id, username, first_name, second_name, email, password)
                 VALUES(user_seq.NEXTVAL, '$username', '$first_name', '$second_name', '$email', '$password')";
 
     $result = oci_parse($db, $query);
     oci_execute($result, OCI_DEFAULT);
-
-    $cquery = "SELECT * FROM users";
-    echo $cquery;
-    $result = oci_parse($db, $cquery);
-    oci_execute($result);
-    oci_fetch_all($result, $cq);
 
     //var_dump($cq);
 
@@ -96,16 +97,18 @@ if (isset($_POST['login_user'])) {
 
     if (count($errors) == 0) {
         $password = md5($password);
-        $query = "SELECT COUNT(*) FROM users WHERE email='$email' AND password='$password'";
+        // Altynay here is sql_query
+        // Get users where email and password equals, to check email and password, 
+        $query = "SELECT id FROM users WHERE email='$email' AND password='$password'";
         
         $results = oci_parse($db, $query);
         oci_execute($results);
         oci_fetch_all($results, $results);
 
         //var_dump($results);
-        echo $results['COUNT(*)'][0];
-
-        if ($results['COUNT(*)'][0] == 1) {
+        
+        $_SESSION['user_id'] = $results['ID'][0];
+        if ( sizeof( $results['ID'] ) >= 1) {
           $_SESSION['email'] = $email;
           $_SESSION['success'] = "You are now logged in";
           header('location: index.php');
