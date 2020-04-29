@@ -47,7 +47,10 @@
         // Altynai sql query
         // get all requests done by user, get count(*) for every organization that he rquested
         // contact me
-        $requests_organizations = "0";
+        // organization name, and count(*)
+        $sql_query = "select first_name, id from users where id = '$user_id'";
+        $list_organizations = oci_parse($db, $sql_query);
+        oci_execute($list_organizations);
 
         // Altynai sql query
         // get count(*) questions, how many qustions he asked
@@ -115,9 +118,24 @@
                     <!--contacts--><h4> <?php echo $contacts; ?> </h4>
                 </div>
                 <div class="sp_around">
-                    <!--тут таблицу надо сделать-->
                     <h4 class="card-text">Сдача материалов: </h4>
-                    <!--материалы--><h4><?php echo $requests_organizations; ?></h4>
+                </div>
+                <div class="sp_around">
+                    <!--Сколько материалов он сдал-->
+                    
+                    <?php
+                        echo "<table border='1'>\n";
+
+                        while (($row = oci_fetch_array($list_organizations, OCI_ASSOC+OCI_RETURN_NULLS)) != false) {
+                            echo "<tr>\n";
+                            foreach ($row as $item) {
+                                echo "    <td>".($item !== null ? htmlentities($item, ENT_QUOTES) : "&nbsp;")."</td>\n";
+                            }
+                            echo "</tr>\n";
+                        }
+                        echo "</table>\n";  
+                    ?>
+                    
                 </div>
                 <div class="sp_around">
                     <h4 class="card-text">Количество заданных вопросов: </h4>

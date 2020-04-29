@@ -133,6 +133,14 @@ h4 {
 	justify-content: space-between;
 	padding: 10px;
 }
+.sp_around table{
+	margin-left: 100px;
+	font-size: 25px;
+}
+.sp_around table td{
+	width: 300px;
+	text-align: center;
+}
 .change {
 	background-color: #009c9b;
 	color: white;
