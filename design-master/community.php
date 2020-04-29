@@ -1,4 +1,3 @@
-<?php include('server.php') ?>
 <?php 
 
 	// echo $_SESSION['user_id'];
@@ -76,8 +75,8 @@
 		        <img src = "images/logoo.png" >
 		        <!--Input data-->
 		        <h3>Поиск пользователя</h3>
-		        <input class="form-control mr-sm-2 email" type="search" name="first_name" placeholder="Имя" aria-label="Search" value="<?php echo $first_name; ?>">
-		        <input class="form-control mr-sm-2 email" type="search" name="second_name" placeholder="Фамилия" aria-label="Search" value="<?php echo $second_name; ?>">
+		        <input class="form-control mr-sm-2 email" type="search" name="first_name" placeholder="Имя" aria-label="Search" value="">
+		        <input class="form-control mr-sm-2 email" type="search" name="second_name" placeholder="Фамилия" aria-label="Search" value="">
             
                 <button class="p" type="submit" name="search_user">Поиск</button>
 		    </div>
