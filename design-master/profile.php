@@ -126,6 +126,8 @@
                     <?php
                         echo "<table border='1'>\n";
 
+                        echo "<tr> <td><b>Organization Name</b></td> <td><b>Number of requests</b></td> </tr>";
+
                         while (($row = oci_fetch_array($list_organizations, OCI_ASSOC+OCI_RETURN_NULLS)) != false) {
                             echo "<tr>\n";
                             foreach ($row as $item) {

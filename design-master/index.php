@@ -21,7 +21,7 @@
 
   // Altynay here is sql_query
   // get all organizations
-  $get_organizations = "SELECT * FROM users";
+  $get_organizasqtions = "SELECT * FROM users";
   // 
 
   //echo $user_check_query;
@@ -48,7 +48,7 @@
         <a class="nav-link" href="index.php">Главная</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="locations.php">Пункты</a>
+        <a class="nav-link" href="community.php">Сообщество</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="#">Блог</a>

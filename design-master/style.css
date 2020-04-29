@@ -139,8 +139,12 @@ h4 {
 }
 .sp_around table td{
 	width: 300px;
+}
+
+table td{
 	text-align: center;
 }
+
 .change {
 	background-color: #009c9b;
 	color: white;
