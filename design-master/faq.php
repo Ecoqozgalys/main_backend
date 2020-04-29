@@ -1,7 +1,21 @@
 <?php
-session_start();
+  session_start();
 
-ob_start();
+  // echo $_SESSION['user_id'];
+
+  if (!isset($_SESSION['email'])) {
+    $_SESSION['msg'] = "You must log in first";
+    $_SESSION['user_id'] = 'None';
+  }
+  if (!isset($_SESSION['user_id'])) {
+    $_SESSION['user_id'] = "None";
+  }
+  if (isset($_GET['logout'])) {
+    session_destroy();
+    unset($_SESSION['email']);
+    $_SESSION['user_id'] = 'None';
+    header("location: login.php");
+  }
 ?>
 <!DOCTYPE php>
 <php>
@@ -28,15 +42,22 @@ ob_start();
       <li class="nav-item">
         <a class="nav-link" href="faq.php">FAQ</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="registration.php">Войти</a>
-      </li>
+        <!-- logged in user information -->
+        <?php  
+          if (isset($_SESSION['email'])) {
+            echo "<li class='nav-item'><a class='nav-link' href='profile.php?user_id=".$_SESSION['user_id']."'>".$_SESSION['email']."</a></li>";
+            echo "<li class='nav-item'><a class='nav-link' href='index.php?logout='1'' style='color: red;'>logout</a></li>";
+          }
+          else{
+            echo "<a class='nav-link' href='login.php'>Войти</a></li>";
+          }
+        ?>
     </ul>
   </nav>
   <center >
     <section class="back2">
     <h5 class="l-heading" style="margin-bottom: 5vh;">Ответы на популярные вопросы</h5>
-    <div class="faq-block">
+      <div class="faq-block">
         <img src="images/1.jpg">
         <div class="faq-div">
             <h4>1.  Зачем нужна сортировка мусора?</h4>
@@ -66,6 +87,40 @@ ob_start();
         </div>
         <img src="images/44.jpg">
       </div>
+
+
+      <?php 
+
+        $db = oci_pconnect("ecoeco", "qwerty123", "//localhost/xe");
+        // Altynay sql query
+        // Get all data from FAQ
+        $sql_query = " SELECT * from users";
+
+        $result = oci_parse($db, $sql_query);
+        oci_execute($result);
+
+        $cnt = 1;  
+
+        while (($row = oci_fetch_array($result, OCI_BOTH)) != false) {
+  
+            echo "<div class='faq-block'>\n";
+            echo "  <div class='faq-div'>\n";
+            
+            echo "<h4>".strval($cnt)." ".$row['FIRST_NAME']."</h4>\n"; // question
+            echo "<p style='margin-top: 5vh; color: rgb(33,92,34);'>".$row['SECOND_NAME']."</p>"; // answer, problem with <br>
+
+            echo "</div>";
+            $img_cnt = $cnt % 4;
+            if( $img_cnt == 0 ){
+              $img_cnt = 4;
+            }
+            echo "<img src='images/".strval($img_cnt) .".jpg'>";
+            echo "</div>";
+            $cnt ++;
+
+        }
+
+      ?>  
 
       <h5 class="l-heading" style="margin-top: 5vh;">Задайте свой вопрос здесь</h5>
       <form class = "login" method="post" action="ask_question.php">

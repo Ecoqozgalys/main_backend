@@ -8,7 +8,9 @@ $first_name  = "";
 $second_name = "";
 $errors = array(); 
 
-$_SESSION['user_id'] = 'None';
+if( !isset($_SESSION['user_id']) ){
+  $_SESSION['user_id'] = 'None';
+}
 
 // connect to the database
 $db = oci_pconnect("ecoeco", "qwerty123", "//localhost/xe");

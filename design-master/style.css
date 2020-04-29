@@ -127,10 +127,7 @@ h4 {
 	display: flex;
 	justify-content: center;
 }
-.card-img {
-	height: 25vh !important; 
-	width: 15vw !important;
-}
+
 .sp_around {
 	display: flex; 
 	justify-content: space-between;
@@ -140,9 +137,11 @@ h4 {
 	background-color: #009c9b;
 	color: white;
 	border-radius: 25px;
+	padding: 5px;
 }
 .change:hover {
 	background-color: #fed501;
+	text-decoration: none;
 }
 .card {margin-top: 25vh;}
 .photo-card {
@@ -150,6 +149,9 @@ h4 {
 	flex-direction: column; 
 	justify-content: center;
 	margin-left: 0px;
+}
+.card-img { 
+	width: 25vw !important;
 }
 .l-heading {
 	color: rgb(5, 97, 118);
@@ -191,6 +193,19 @@ h4 {
 	border-radius: 20px;
 	margin: 0vh 2vw;
 }
+
+.brands-section {
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	padding: 20px;
+	width: 50vw;
+	background-color: white;
+	border: 5px solid #009c9b;
+	border-radius: 20px;
+}
+.brands-section img {width:20vw;}
+
 @media (max-width: 830px) {
 	
 	.dropdown-item {
@@ -239,5 +254,9 @@ h4 {
 	}
 	.org-table {flex-direction: column; }
 	.org-card {margin: 2vh 0vw;}
+	.brands-section {
+		width: 90vw;
+	}
+	.brands-section img {width:50vw;}
 }
 

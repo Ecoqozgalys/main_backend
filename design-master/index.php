@@ -1,15 +1,20 @@
 <?php include('server.php') ?>
 <?php 
+
+	// echo $_SESSION['user_id'];
+
   if (!isset($_SESSION['email'])) {
-  	$_SESSION['msg'] = "You must log in first";
+	  $_SESSION['msg'] = "You must log in first";
+	  $_SESSION['user_id'] = 'None';
   }
   if (!isset($_SESSION['user_id'])) {
 	$_SESSION['user_id'] = "None";
   }
   if (isset($_GET['logout'])) {
   	session_destroy();
-  	unset($_SESSION['email']);
-  	header("location: login.php");
+	unset($_SESSION['email']);
+	$_SESSION['user_id'] = 'None';
+	header("location: login.php");
   }
 
   $db = oci_pconnect("ecoeco", "qwerty123", "//localhost/xe");
@@ -55,7 +60,7 @@
 		<!-- logged in user information -->
 		<?php  
 			if (isset($_SESSION['email'])) {
-				echo "<li class='nav-item'><a class='nav-link' href='user_page.php?user_id=".$_SESSION['user_id']."'>".$_SESSION['email']."</a></li>";
+				echo "<li class='nav-item'><a class='nav-link' href='profile.php?user_id=".$_SESSION['user_id']."'>".$_SESSION['email']."</a></li>";
 				echo "<li class='nav-item'><a class='nav-link' href='index.php?logout='1'' style='color: red;'>logout</a></li>";
 			}
 			else{
@@ -91,6 +96,47 @@
 		</div>
 
 		<img src="images/p.jpg" class = "bigIm">
-		</form>
+	</form>
+
+	<center >
+    	<section>
+    		<div class="brands-section">
+    			<h5 class = "change" style="margin-bottom: 5vh;">Бренды, принимающие вещи</h5>
+    			<img src="images/3.jpg" >
+				
+				<?php  
+
+					$db = oci_pconnect("ecoeco", "qwerty123", "//localhost/xe");
+					// Altynay sql query
+					// Get all brands, join tables organizations and sales
+					$sql_query = " SELECT * from users";
+
+					$result = oci_parse($db, $sql_query);
+					oci_execute($result);
+
+					while (($row = oci_fetch_array($result, OCI_BOTH)) != false) {
+			
+						echo "<div class='sp_around' style='margin: 2vh 5vw 2vh 7vw; border:2px solid rgb(123, 222, 164);'>\n";
+						
+						echo "  <div>\n";
+						echo "		<h4>".$row['FIRST_NAME']."</h4>\n"; // brand _ name
+						echo "	</div>\n";
+
+						$org_id = $row['ID'];
+						$url_profile = "org_profile.php?org_id=$org_id";
+
+						echo "	<a href = '$url_profile' class='change'>Подробнее</a>"; // detailed organizations link
+
+						echo "</div>";
+						
+					}
+
+				?>  
+
+    		</div>
+
+    	</section>
+	</center>
+
 </body>
 </html>

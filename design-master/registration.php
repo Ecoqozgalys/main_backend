@@ -1,4 +1,19 @@
 <?php include('server.php') ?>
+<?php 
+  if (!isset($_SESSION['email'])) {
+	  $_SESSION['msg'] = "You must log in first";
+	  $_SESSION['user_id'] = 'None';
+  }
+  if (!isset($_SESSION['user_id'])) {
+	$_SESSION['user_id'] = "None";
+  }
+  if (isset($_GET['logout'])) {
+  	session_destroy();
+  	unset($_SESSION['email']);
+	$_SESSION['user_id'] = 'None';
+	header("location: login.php");
+  }
+?>
 <!DOCTYPE html>
 <html>
 <head>

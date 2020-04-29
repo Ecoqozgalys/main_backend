@@ -2,13 +2,17 @@
   session_start(); 
 
   if (!isset($_SESSION['email'])) {
-  	$_SESSION['msg'] = "You must log in first";
-  	header('location: login.php');
+    $_SESSION['msg'] = "You must log in first";
+    $_SESSION['user_id'] = 'None';
+  }
+  if (!isset($_SESSION['user_id'])) {
+	$_SESSION['user_id'] = "None";
   }
   if (isset($_GET['logout'])) {
   	session_destroy();
   	unset($_SESSION['email']);
-  	header("location: login.php");
+	$_SESSION['user_id'] = 'None';
+	header("location: login.php");
   }
 
 ?>
@@ -41,7 +45,7 @@
 		<!-- logged in user information -->
 		<?php  
 			if (isset($_SESSION['email'])) {
-				echo "<li class='nav-item'><a class='nav-link' href='user_page.php?user_id=".$_SESSION['user_id']."'>".$_SESSION['email']."</a></li>";
+				echo "<li class='nav-item'><a class='nav-link' href='profile.php?user_id=".$_SESSION['user_id']."'>".$_SESSION['email']."</a></li>";
 				echo "<li class='nav-item'><a class='nav-link' href='index.php?logout='1'' style='color: red;'>logout</a></li>";
 			}
 			else{
@@ -77,7 +81,7 @@
             echo "<p>Contacts: ".$row['EMAIL']."</p>\n";
 
             $url_request = "send_email.php?email=$org_email&org_id=$org_id";
-            $url_profile = "profile.php?org_id=$org_id";
+            $url_profile = "org_profile.php?org_id=$org_id";
 
             echo "<a href = '$url_profile' class='change' style='color: white; padding: 5px; margin-top: 5vh;'> Подробнее </a>\n"; 
             echo "<a href = '$url_request' class='change' style='color: white; padding: 5px; margin-top: 5vh;'> Leave request </a>\n";
