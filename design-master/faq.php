@@ -37,7 +37,7 @@
         <a class="nav-link" href="locations.php">Пункты</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Блог</a>
+        <a class="nav-link" href="blog.php">Блог</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="faq.php">FAQ</a>
@@ -102,19 +102,31 @@
         $cnt = 1;  
 
         while (($row = oci_fetch_array($result, OCI_BOTH)) != false) {
-  
             echo "<div class='faq-block'>\n";
+
+            if( $cnt % 2 == 1 ){
+              $img_cnt = $cnt % 10;
+              if( $img_cnt == 0 ){
+                $img_cnt = 10;
+              }
+              echo "<img src='images/".strval($img_cnt) .".jpg'>";
+            }
+
             echo "  <div class='faq-div'>\n";
             
             echo "<h4>".strval($cnt)." ".$row['FIRST_NAME']."</h4>\n"; // question
             echo "<p style='margin-top: 5vh; color: rgb(33,92,34);'>".$row['SECOND_NAME']."</p>"; // answer, problem with <br>
 
             echo "</div>";
-            $img_cnt = $cnt % 4;
-            if( $img_cnt == 0 ){
-              $img_cnt = 4;
+            
+            if( $cnt % 2 == 0 ){
+              $img_cnt = $cnt % 10;
+              if( $img_cnt == 0 ){
+                $img_cnt = 10;
+              }
+              echo "<img src='images/".strval($img_cnt) .".jpg'>";
             }
-            echo "<img src='images/".strval($img_cnt) .".jpg'>";
+
             echo "</div>";
             $cnt ++;
 

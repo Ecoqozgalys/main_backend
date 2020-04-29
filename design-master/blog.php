@@ -1,25 +1,28 @@
+
 <?php 
-  session_start(); 
+  session_start();
+	// echo $_SESSION['user_id'];
 
   if (!isset($_SESSION['email'])) {
-    $_SESSION['msg'] = "You must log in first";
-    $_SESSION['user_id'] = 'None';
+	  $_SESSION['msg'] = "You must log in first";
+	  $_SESSION['user_id'] = 'None';
   }
   if (!isset($_SESSION['user_id'])) {
 	$_SESSION['user_id'] = "None";
   }
   if (isset($_GET['logout'])) {
   	session_destroy();
-  	unset($_SESSION['email']);
-	$_SESSION['user_id'] = 'None';
-	header("location: login.php");
+    unset($_SESSION['email']);
+    $_SESSION['user_id'] = 'None';
+    header("location: login.php");
   }
 
 ?>
+
 <!DOCTYPE html>
 <html>
 <head>
-	<title>EcoQozgalys</title>
+	<title>BLOG</title>
 	<link rel="stylesheet" type="text/css" href="style.css?ver=<?php echo rand(111,999)?>">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
@@ -33,7 +36,7 @@
         <a class="nav-link" href="index.php">Главная</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="locations.php">Пункты</a>
+        <a class="nav-link" href="community.php">Сообщество</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="blog.php">Блог</a>
@@ -54,47 +57,62 @@
 		?>
   </ul>
 
-  <center style= "margin-top: 3vh;">
-    <h5 class="l-heading">Пункты приема второсырья, результаты</h5>
-		<img src="images/sort.jpg" style="width: 30vw; ">
-    <!--Results of search-->
+  <center >
+    <section class="back2">
+      <h5 class="l-heading" style="margin-bottom: 5vh;">Читайте интересные статьи на нашем блоге</h5>
     
-    <div class="org-table">;
-
       <?php 
 
         $db = oci_pconnect("ecoeco", "qwerty123", "//localhost/xe");
-        $get_organizations = $_SESSION['organizations_sql'];
+        // Altynay sql query
+        // Get all data from Blog
+        $sql_query = " SELECT * from users";
 
-        $result = oci_parse($db, $get_organizations);
+        $result = oci_parse($db, $sql_query);
         oci_execute($result);
+
+        $cnt = 1;  
 
         while (($row = oci_fetch_array($result, OCI_BOTH)) != false) {
   
-            $org_email = $row['EMAIL'];
-            $org_id = $row['ID'];
-
-            echo "<div class = 'org-card'>\n";
+            echo "<div class='faq-block'>\n";
             
-            echo "<h5>".$row['FIRST_NAME']."</h5>\n";
-            echo "<p>Address: ".$row['SECOND_NAME']."</p>\n";
-            echo "<p>Contacts: ".$row['EMAIL']."</p>\n";
+            if( $cnt % 2 == 1 ){
+              $img_cnt = $cnt % 10;
+              if( $img_cnt == 0 ){
+                $img_cnt = 10;
+              }
+              echo "<img src='images/".strval($img_cnt) .".jpg'>";
+            }
 
-            $url_request = "send_email.php?email=$org_email&org_id=$org_id";
-            $url_profile = "org_profile.php?org_id=$org_id";
+            echo "<div class='faq-div'>";
+            
+            echo "<h4>".$row['FIRST_NAME']."</h4>\n"; // topic of artice
+            echo "<p style='margin-top: 5vh; color: rgb(33,92,34);'>".$row['SECOND_NAME']."</p>"; // first paragraph
 
-            echo "<a href = '$url_profile' class='change' style='color: white; padding: 5px; margin-top: 5vh;'> Подробнее </a>\n"; 
-            echo "<a href = '$url_request' class='change' style='color: white; padding: 5px; margin-top: 5vh;'> Leave request </a>\n";
+            // $blog_id = $row['BLOG_ID'];
+            $blog_id = $row['ID'];
+            $url = "article.php?blog_id=$blog_id";
+            echo "<a href='$url' class='change'>Читать статью</a>";
+
+            echo "  </div>";
+
+            if( $cnt % 2 == 0 ){
+              $img_cnt = $cnt % 10;
+              if( $img_cnt == 0 ){
+                $img_cnt = 10;
+              }
+              echo "<img src='images/".strval($img_cnt) .".jpg'>";
+            }
 
             echo "</div>";
+          
+            $cnt ++;
         }
 
-        echo "</table>\n";
-
       ?>  
-			
-		</div>
 
-	</center>
+    </section>
+  </center>
 </body>
 </html>

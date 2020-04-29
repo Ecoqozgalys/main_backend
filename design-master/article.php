@@ -1,25 +1,27 @@
+
 <?php 
-  session_start(); 
+  session_start();
+	// echo $_SESSION['user_id'];
 
   if (!isset($_SESSION['email'])) {
-    $_SESSION['msg'] = "You must log in first";
-    $_SESSION['user_id'] = 'None';
+	  $_SESSION['msg'] = "You must log in first";
+	  $_SESSION['user_id'] = 'None';
   }
   if (!isset($_SESSION['user_id'])) {
 	$_SESSION['user_id'] = "None";
   }
   if (isset($_GET['logout'])) {
   	session_destroy();
-  	unset($_SESSION['email']);
+	unset($_SESSION['email']);
 	$_SESSION['user_id'] = 'None';
 	header("location: login.php");
   }
-
 ?>
+
 <!DOCTYPE html>
 <html>
 <head>
-	<title>EcoQozgalys</title>
+	<title>Article</title>
 	<link rel="stylesheet" type="text/css" href="style.css?ver=<?php echo rand(111,999)?>">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
@@ -33,7 +35,7 @@
         <a class="nav-link" href="index.php">Главная</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="locations.php">Пункты</a>
+        <a class="nav-link" href="community.php">Сообщество</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="blog.php">Блог</a>
@@ -52,49 +54,57 @@
 				echo "<a class='nav-link' href='login.php'>Войти</a></li>";
 			}
 		?>
-  </ul>
-
-  <center style= "margin-top: 3vh;">
-    <h5 class="l-heading">Пункты приема второсырья, результаты</h5>
-		<img src="images/sort.jpg" style="width: 30vw; ">
-    <!--Results of search-->
+    </ul>
+   <center >
     
-    <div class="org-table">;
-
-      <?php 
-
-        $db = oci_pconnect("ecoeco", "qwerty123", "//localhost/xe");
-        $get_organizations = $_SESSION['organizations_sql'];
-
-        $result = oci_parse($db, $get_organizations);
-        oci_execute($result);
-
-        while (($row = oci_fetch_array($result, OCI_BOTH)) != false) {
-  
-            $org_email = $row['EMAIL'];
-            $org_id = $row['ID'];
-
-            echo "<div class = 'org-card'>\n";
+    <?php
+    
+        if( isset($_GET['blog_id']) ){
             
-            echo "<h5>".$row['FIRST_NAME']."</h5>\n";
-            echo "<p>Address: ".$row['SECOND_NAME']."</p>\n";
-            echo "<p>Contacts: ".$row['EMAIL']."</p>\n";
+            $blog_id = $_GET['blog_id'];
+            
+            $db = oci_pconnect("ecoeco", "qwerty123", "//localhost/xe");
 
-            $url_request = "send_email.php?email=$org_email&org_id=$org_id";
-            $url_profile = "org_profile.php?org_id=$org_id";
+            // Altynay sql query
+            // Get article by blog_id
+            //$sql_query = "SELECT * from blog where id = '$blog_id'"; // something
+            $sql_query = "SELECT * from users where ID = '$blog_id'"; // something
 
-            echo "<a href = '$url_profile' class='change' style='color: white; padding: 5px; margin-top: 5vh;'> Подробнее </a>\n"; 
-            echo "<a href = '$url_request' class='change' style='color: white; padding: 5px; margin-top: 5vh;'> Leave request </a>\n";
+            $result = oci_parse($db, $sql_query);
+            oci_execute($result);
 
-            echo "</div>";
+            $row = oci_fetch_array($result, OCI_BOTH);
+
+            //var_dump($row);
+
+            $topic = $row['FIRST_NAME'];
+            $header = $row['SECOND_NAME'];
+            $text = $row['SECOND_NAME'];
+
+            $random_image_number = rand(1, 10);
+
         }
 
-        echo "</table>\n";
+    ?>
 
-      ?>  
-			
-		</div>
+   <section class="back2">
+    <h5 class="l-heading" style="margin-bottom: 5vh;">Читайте интересные статьи на нашем блоге</h5>
+    <div style="display: flex;justify-content: center;flex-direction: column; margin: 5vh 15vw; background-color: white; padding: 20px;
+    text-align: left">
 
-	</center>
+        <?php echo "<img src='images/".$random_image_number.".jpg' style='width: 30vw; margin-left: 15vw;''>"; ?>
+        <!--Article from blog-->
+            <h4> <?php echo $topic; ?> </h4>
+            <p style="margin-top: 5vh; color: rgb(33,92,34);">
+            
+                <?php echo $header; ?>
+                <br>
+                <?php echo $text; ?>
+
+            </p>
+      </div>
+      <a href="blog.php" class="change">Назад</a>
+    </section>
+  </center>
 </body>
 </html>

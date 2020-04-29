@@ -30,7 +30,7 @@ if (isset($_POST['find_organization'])) {
   echo $material;
   // Altynay here is sql_query
   // you have to get all organizations where city and material equal from organizations table
-  $get_organizations = "something SELECT * FROM users WHERE FIRST_NAME = '$city' AND EMAIL = '$material'";
+  $get_organizations = "SELECT * FROM users WHERE FIRST_NAME = '$city' AND EMAIL = '$material'";
   // 
 
   //echo $user_check_query;

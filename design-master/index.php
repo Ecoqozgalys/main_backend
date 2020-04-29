@@ -1,6 +1,6 @@
 <?php include('server.php') ?>
 <?php 
-
+		
 	// echo $_SESSION['user_id'];
 
   if (!isset($_SESSION['email'])) {
@@ -21,7 +21,7 @@
 
   // Altynay here is sql_query
   // get all organizations
-  $get_organizasqtions = "SELECT * FROM users";
+  $get_organizations = "SELECT * FROM users";
   // 
 
   //echo $user_check_query;
@@ -51,7 +51,7 @@
         <a class="nav-link" href="community.php">Сообщество</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Блог</a>
+        <a class="nav-link" href="blog.php">Блог</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="faq.php">FAQ</a>

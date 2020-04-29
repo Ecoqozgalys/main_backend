@@ -80,7 +80,7 @@
                 <a class="nav-link" href="locations.php">Пункты</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Блог</a>
+                <a class="nav-link" href="blog.php">Блог</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="faq.php">FAQ</a>
